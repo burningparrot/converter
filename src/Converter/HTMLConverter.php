@@ -65,18 +65,19 @@ class HTMLConverter extends Converter {
 
       function ($matches) {
 
-        // Extracts the url.
+        // Extract the url.
         if (preg_match('/\s*href\s*=\s*("([^"]*")|\'[^\']*\'|([^\'">\s]+))/iu', $matches[0], $others) === 1) {
           $href = trim($others[1], '"');
-
-          // Extracts the target.
-          if (preg_match('/\s*target\s*=\s*("([^"]*")|\'[^\']*\'|([^\'">\s]+))/iu', $matches[0], $others) === 1)
-            $target = strtolower(trim($others[1], '"'));
-          else
-            $target = "_self";
+        } else {
+          $href="#";
         }
-        else
-          throw new \RuntimeException(sprintf("Text identified by '%d' has malformed links", $this->id));
+
+       // Extract the target.
+        if (preg_match('/\s*target\s*=\s*("([^"]*")|\'[^\']*\'|([^\'">\s]+))/iu', $matches[0], $others) === 1) {
+          $target = strtolower(trim($others[1], '"'));
+        } else {
+          $target = "_self";
+        }
 
         return "[url=".$href." t=".$target."]".$matches[1]."[/url]";
 
