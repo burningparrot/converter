@@ -123,13 +123,13 @@ class HTMLConverter extends Converter {
         $tag = strtolower($matches[0]);
 
         switch ($tag) {
-          case ($tag == '<strong>' || $tag == '<b>'):
+          case (strpos($tag, '<strong') !== false || $tag == '<b>'):
             return '[b]';
 
           case ($tag == '</strong>' || $tag == '</b>'):
             return '[/b]';
 
-          case ($tag == '<em>' || $tag == '<i>'):
+          case (strpos($tag, '<em') !== false || strpos($tag, '<i') !== false):
             return '[i]';
 
           case ($tag == '</em>' || $tag == '</i>'):
